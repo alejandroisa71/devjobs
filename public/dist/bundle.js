@@ -15,7 +15,7 @@
   \**************************/
 /***/ (() => {
 
-eval("\n\n//# sourceURL=webpack://devjobs/./public/js/app.js?");
+eval("document.addEventListener('DOMContentLoaded', function () {\n  var skills = document.querySelector('.lista-conocimientos');\n\n  if (skills) {\n    skills.addEventListener('click', agregarSkills);\n  }\n});\n\nvar agregarSkills = function agregarSkills(e) {\n  if (e.target.getElementsByTagName === 'li') {\n    console.log('si');\n  } else {\n    console.log('no');\n  }\n};\n\n//# sourceURL=webpack://devjobs/./public/js/app.js?");
 
 /***/ })
 
