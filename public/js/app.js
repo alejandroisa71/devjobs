@@ -6,10 +6,21 @@ document.addEventListener('DOMContentLoaded',()=>{
   }
 })
 
+const skills = new Set();
 const agregarSkills =(e)=>{
-  if(e.target.getElementsByTagName === 'li'){
-      console.log('si')
-  }else{
-      console.log('no')
+  // console.log(e.target.tagName)
+  if(e.target.tagName === 'LI'){
+    if(e.target.classList.contains('activo')){
+     //quitarlo del set y quitar la clase 
+     skills.delete(e.target.textContent);
+     e.target.classList.remove('activo');
+    }
+    else{
+      //agreagarlo al set y agregar la clase
+      skills.add(e.target.textContent);
+      e.target.classList.add('activo');
+    }
   }
+  const skillsArray=[...skills]
+  document.querySelector('#skills').value=skillsArray;
 }
