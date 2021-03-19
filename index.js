@@ -8,10 +8,15 @@ const router = require("./routes");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
+const bodyParser = require("body-parser");
 
 require("dotenv").config({ path: "variables.env" });
 
 const app = express();
+
+//habilitamos body-parser
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 //habilitar handlebars como view
 app.engine(
