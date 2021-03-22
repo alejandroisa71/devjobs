@@ -16,7 +16,7 @@ exports.agregarVacante = async (req, res) => {
   //   //crear arreglo de habilidades (skills)
   vacante.skills = req.body.skills.split(",");
 
-  console.log(vacante);
+  //console.log(vacante);
   //almacenarlo en la base de datos
   const nuevaVacante = await vacante.save();
 

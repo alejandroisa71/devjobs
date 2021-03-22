@@ -19,9 +19,17 @@
 
 <div class="vacante-contenedor contenedor">
     <main class="contenido">
-        <h2>Descripción</h2>
+        <h2>Descripción del Puesto</h2>
+        <div class="vacante-descripcion">
+            {{{vacante.descripcion}}}
+        </div>
     </main>
     <aside class="sidebar">
-
+        <h2>Conocimientos Deseados</h2>
+        <ul class="skills">
+            {{#each vacante.skills}}
+                <li>{{this}}</li>
+            {{/each}}
+        </ul>
     </aside>
 </div>
