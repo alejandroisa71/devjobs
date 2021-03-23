@@ -10,3 +10,10 @@ https://gist.github.com/juanpablogdl/00bebaa4a4c28a696ddb6c82e97e5ef1
 
 
 video 121
+
+sequelize funciona mejor con bcrypt-node
+en este caso funciona mejor con bcrypt
+
+ singlenton de mongoose par todo el proyecto ?
+ unique diferencia entre sequelize y mongoose?
+

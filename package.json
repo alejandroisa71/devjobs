@@ -11,6 +11,7 @@
   "author": "Alejandro Isa",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "concurrently": "^6.0.0",
     "connect-mongo": "^2.0.3",
     "cookie-parser": "^1.4.5",
