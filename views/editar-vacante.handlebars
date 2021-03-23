@@ -1,5 +1,9 @@
 <main class="contenedor">
-  <form action="/vacantes/nueva" method="POST" class="default-form">
+  <form
+    action="/vacantes/editar/{{vacante.url}}"
+    method="POST"
+    class="default-form"
+  >
     <h3>
       Información General
     </h3>
@@ -11,6 +15,7 @@
         type="text"
         name="titulo"
         placeholder="Ej: React Developer"
+        value="{{vacante.titulo}}"
         required
       />
     </div>
@@ -22,6 +27,7 @@
         type="text"
         name="empresa"
         placeholder="Empresa Contrata"
+        value="{{vacante.empresa}}"
         required
       />
     </div>
@@ -33,6 +39,7 @@
         type="text"
         name="ubicacion"
         placeholder="Ej: Argentina o Remoto"
+        value="{{vacante.ubicacion}}"
         required
       />
     </div>
@@ -40,7 +47,13 @@
       <label>
         Salario (USD)
       </label>
-      <input type="text" name="salario" placeholder="Ej: $500" required />
+      <input
+        type="text"
+        name="salario"
+        placeholder="Ej: $500"
+        value="{{vacante.salario}}"
+        required
+      />
     </div>
     <div class="campo">
       <label>
@@ -71,7 +84,12 @@
       <label>
         Descripción
       </label>
-      <input type="hidden" id="x" name="descripcion" />
+      <input
+        type="hidden"
+        id="x"
+        name="descripcion"
+        value="{{{vacante.descripcion}}}"
+      />
       <trix-editor input="x"></trix-editor>
     </div>
     <h3>
@@ -81,7 +99,7 @@
       {{#seleccionarSkills a}}{{/seleccionarSkills}}
     </ul>
     <div class="campo centrar-horizontal">
-      <input type="hidden" name="skills" id="skills">
+      <input type="hidden" name="skills" id="skills" />
       <input type="submit" value="Publicar" class="btn btn-azul" />
     </div>
   </form>
