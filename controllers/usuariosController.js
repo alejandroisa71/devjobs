@@ -64,6 +64,6 @@ exports.crearUsuario = async (req, res, next) => {
 // formulario para iniciar sesion
 exports.formIniciarSesion = (req, res) => {
   res.render("iniciar-sesion", {
-    nombrePagina: "Iniciar Sesion devJobs",
+    nombrePagina: "Iniciar Sesión devJobs",
   });
 };
