@@ -43,6 +43,11 @@ const vacantesSchema = new mongoose.Schema({
       cv: String,
     },
   ],
+  autor: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Usuarios",
+    required: "El autor es obligatorio",
+  },
 });
 
 vacantesSchema.pre("save", function (next) {
