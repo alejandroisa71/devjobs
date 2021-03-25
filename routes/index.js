@@ -17,6 +17,7 @@ module.exports = () => {
   router.post(
     "/vacantes/nueva",
     authController.verificarUsuario,
+    vacantesController.validarVacante,
     vacantesController.agregarVacante
   );
 
