@@ -28,6 +28,7 @@ module.exports = () => {
   router.get(
     "/vacantes/editar/:url",
     authController.verificarUsuario,
+    vacantesController.validarVacante,
     vacantesController.formEditarVacante
   );
   router.post(
@@ -70,6 +71,7 @@ module.exports = () => {
   router.post(
     "/editar-perfil",
     authController.verificarUsuario,
+    usuariosController.validarPerfil,
     usuariosController.editarPerfil
   );
 
