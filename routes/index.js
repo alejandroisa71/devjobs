@@ -28,7 +28,6 @@ module.exports = () => {
   router.get(
     "/vacantes/editar/:url",
     authController.verificarUsuario,
-    vacantesController.validarVacante,
     vacantesController.formEditarVacante
   );
   router.post(
@@ -38,7 +37,7 @@ module.exports = () => {
     vacantesController.editarVacante
   );
 
-  //Eliminar Vacante
+  //Eliminar Vacantes
   router.delete('/vacantes/eliminar/:id',
       vacantesController.eliminarVacante
   )

@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
     skillsSeleccionados();
   }
 
-  const vacantesListado= document.querySelector('.panel-administacion');
+  const vacantesListado= document.querySelector('.panel-administracion');
 
   if (vacantesListado) {
     vacantesListado.addEventListener('click', accionesListado);
@@ -73,7 +73,6 @@ const limpiarAlertas=()=>{
 //Elminar vacantes
 const accionesListado = e =>{
   e.preventDefault();
-
   if (e.target.dataset.eliminar) {
     //eliminar por medio de axios
   }else{
