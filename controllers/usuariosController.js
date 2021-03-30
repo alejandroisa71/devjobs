@@ -95,24 +95,23 @@ exports.editarPerfil = async (req, res) => {
   res.redirect("/administracion");
 };
 
-//sanitizar  y validar el formulario de editar perfiles
+//sanitizar y validar el formulario de editar perfiles
 exports.validarPerfil = (req,res,next)=>{
- // sanitizar
+  //sanitizar
   req.sanitizeBody('nombre').escape();
   req.sanitizeBody('email').escape();
-  if (req.body.password) {
+  if(req.body.password){
     req.sanitizeBody('password').escape();
   }
- //validar
- req.checkBody('nombre', 'El nombre no puede ir vacío').notEmpty();
- req.checkBody('email', 'El correo no puede ir vacío').notEmpty();
+  //validar
+  req.checkBody('nombre', 'El nombre no puede ir vacio').notEmpty();
+  req.checkBody('email', 'El correo no puede ir vacio').notEmpty();
 
   const errores = req.validationErrors();
 
   if (errores) {
-      req.flash('error', errores.map(error=> error.msg))
-
-      res.render("editar-perfil", {
+    req.flash('error', errores.map(error => error.msg))
+    res.render("editar-perfil", {
       nombrePagina: "Edita tu perfil en devJobs",
       usuario: req.user,
       cerrarSesion: true,
@@ -120,6 +119,6 @@ exports.validarPerfil = (req,res,next)=>{
       mensajes: req.flash()
     });
   }
-  next();// todo bien, siguiente middleware
+  next(); // todo bien, siguiente middleware
 
 }
