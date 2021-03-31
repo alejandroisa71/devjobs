@@ -74,7 +74,43 @@ const limpiarAlertas=()=>{
 const accionesListado = e =>{
   e.preventDefault();
   if (e.target.dataset.eliminar) {
-    //eliminar por medio de axios
+
+    
+    Swal.fire({
+      title: '¿Confirmar Eliminación?',
+      text: "Una vez eliminada, no se puede recuperar!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Eliminar',
+      cancelButtonText:'No, Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        //enviar la peticion con axios
+        const url =`${location.origin}/vacantes/eliminar/${e.target.dataset.eliminar}`;
+
+        //Axios par eliminar el registro
+        axios.delete(url, {params:{url}})
+          .then(function(respuesta){
+            if (respuesta.status === 200) {
+              Swal.fire(
+                'Eliminado!',
+                respuesta.data,
+                'success'
+              );
+
+              //TODO: Eliminar del DOM
+              e.target.parentElement.parentElement.parentElement.removeChild(
+                e.target.parentElement.parentElement
+              );
+            }
+          });
+
+      
+      }
+    })
   }else{
     window.location.href = e.target.href;
   }
