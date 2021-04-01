@@ -1,11 +1,11 @@
-import axios from 'axios';
-import Swal from 'sweetalert2';
+import axios from "axios";
+import Swal from "sweetalert2";
 
 document.addEventListener("DOMContentLoaded", () => {
   const skills = document.querySelector(".lista-conocimientos");
 
   // Limpiar las alertas
-  let alertas = document.querySelector('.alertas')
+  let alertas = document.querySelector(".alertas");
 
   if (alertas) {
     limpiarAlertas();
@@ -18,10 +18,10 @@ document.addEventListener("DOMContentLoaded", () => {
     skillsSeleccionados();
   }
 
-  const vacantesListado= document.querySelector('.panel-administracion');
+  const vacantesListado = document.querySelector(".panel-administracion");
 
   if (vacantesListado) {
-    vacantesListado.addEventListener('click', accionesListado);
+    vacantesListado.addEventListener("click", accionesListado);
   }
 });
 
@@ -58,48 +58,42 @@ const skillsSeleccionados = () => {
   console.log(seleccionadas);
 };
 
-const limpiarAlertas=()=>{
-   const alertas= document.querySelector('.alertas')
-   const interval= setInterval(() => {
-      if(alertas.children.length > 0){
-        alertas.removeChild(alertas.children[0]);
-      }else if(alertas.children.length===0){
-          alertas.parentElement.removeChild(alertas);
-          clearInterval(interval);
-      }
-   }, 2000);
-}
+const limpiarAlertas = () => {
+  const alertas = document.querySelector(".alertas");
+  const interval = setInterval(() => {
+    if (alertas.children.length > 0) {
+      alertas.removeChild(alertas.children[0]);
+    } else if (alertas.children.length === 0) {
+      alertas.parentElement.removeChild(alertas);
+      clearInterval(interval);
+    }
+  }, 2000);
+};
 
 //Elminar vacantes
-const accionesListado = e =>{
+const accionesListado = (e) => {
   e.preventDefault();
   if (e.target.dataset.eliminar) {
-
-    
+    // eliminar por axios
     Swal.fire({
-      title: '¿Confirmar Eliminación?',
+      title: "¿Confirmar Eliminación?",
       text: "Una vez eliminada, no se puede recuperar!",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, Eliminar',
-      cancelButtonText:'No, Cancelar'
-    }).then((result) => {
-      if (result.isConfirmed) {
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, Eliminar",
+      cancelButtonText: "No, Cancelar",
+    })
+      .then((result) => {
+        if (result.isConfirmed) {
+          //enviar la peticion con axios
+          const url = `${location.origin}/vacantes/eliminar/${e.target.dataset.eliminar}`;
 
-        //enviar la peticion con axios
-        const url =`${location.origin}/vacantes/eliminar/${e.target.dataset.eliminar}`;
-
-        //Axios par eliminar el registro
-        axios.delete(url, {params:{url}})
-          .then(function(respuesta){
+          //Axios par eliminar el registro
+          axios.delete(url, { params: { url } }).then(function (respuesta) {
             if (respuesta.status === 200) {
-              Swal.fire(
-                'Eliminado!',
-                respuesta.data,
-                'success'
-              );
+              Swal.fire("Eliminado!", respuesta.data, "success");
 
               //TODO: Eliminar del DOM
               e.target.parentElement.parentElement.parentElement.removeChild(
@@ -107,11 +101,16 @@ const accionesListado = e =>{
               );
             }
           });
-
-      
-      }
-    })
-  }else{
+        }
+      })
+      .catch(() => {
+        Swal.fire({
+          type: "error",
+          title: "Hubo un Error",
+          text: "No se pudo Eliminar",
+        });
+      });
+  } else if (e.target.tagName === "A") {
     window.location.href = e.target.href;
   }
-}
+};
