@@ -23,7 +23,7 @@ const configuracionMulter = {
       cb(null, `${shortid.generate()}.${extension}`);
     },
   })),
-  fileFilter(rea, file, cb) {
+  fileFilter(req, file, cb) {
     if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
       //el callback se ejecuta como true o false: true cuando la imagen se acepta
       cb(null, true);
@@ -110,6 +110,7 @@ exports.formEditarPerfil = (req, res) => {
     usuario: req.user,
     cerrarSesion: true,
     nombre: req.user.nombre,
+    imagen: req.user.imagen
   });
 };
 
@@ -157,6 +158,7 @@ exports.validarPerfil = (req, res, next) => {
       usuario: req.user,
       cerrarSesion: true,
       nombre: req.user.nombre,
+      imagen: req.user.imagen,
       mensajes: req.flash(),
     });
   }
