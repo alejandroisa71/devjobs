@@ -68,15 +68,14 @@ module.exports = () => {
   router.get(
     "/editar-perfil",
     authController.verificarUsuario,
-    //usuariosController.validarPerfil,
-    usuariosController.subirImagen,
     usuariosController.formEditarPerfil
   );
 
   router.post(
     "/editar-perfil",
     authController.verificarUsuario,
-    usuariosController.validarPerfil,
+    //usuariosController.validarPerfil,
+    usuariosController.subirImagen,
     usuariosController.editarPerfil
   );
 
