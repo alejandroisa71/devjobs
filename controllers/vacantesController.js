@@ -32,7 +32,8 @@ exports.agregarVacante = async (req, res) => {
 
 //muestra una vacante
 exports.mostrarVacante = async (req, res, next) => {
-  const vacante = await Vacante.findOne({ url: req.params.url });
+  const vacante = await Vacante.findOne({ url: req.params.url }).populate('autor');
+
 
   //si no hay resultados
   if (!vacante) return next();
