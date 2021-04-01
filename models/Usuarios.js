@@ -20,6 +20,7 @@ const usuariosSchema = new mongoose.Schema({
   },
   token: String,
   expira: Date,
+  imagen: String,
 });
 
 //Metodo para hashear los passwords
@@ -43,10 +44,10 @@ usuariosSchema.post("save", function (error, doc, next) {
 });
 
 //Autenticar Usuarios
-usuariosSchema.methods={
-  compararPassword:function(password){
+usuariosSchema.methods = {
+  compararPassword: function (password) {
     return bcrypt.compareSync(password, this.password);
-  }
-}
+  },
+};
 
 module.exports = mongoose.model("Usuarios", usuariosSchema);

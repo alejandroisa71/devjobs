@@ -38,9 +38,7 @@ module.exports = () => {
   );
 
   //Eliminar Vacantes
-  router.delete('/vacantes/eliminar/:id',
-      vacantesController.eliminarVacante
-  )
+  router.delete("/vacantes/eliminar/:id", vacantesController.eliminarVacante);
 
   //Crear Cuentas
   router.get("/crear-cuenta", usuariosController.formCrearCuenta);
@@ -70,6 +68,8 @@ module.exports = () => {
   router.get(
     "/editar-perfil",
     authController.verificarUsuario,
+    //usuariosController.validarPerfil,
+    usuariosController.subirImagen,
     usuariosController.formEditarPerfil
   );
 
