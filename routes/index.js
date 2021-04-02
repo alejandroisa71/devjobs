@@ -80,10 +80,11 @@ module.exports = () => {
   );
 
   //Recibir Mensajes de Candidatos
-  router.post('/vacantes/:url',
+  router.post(
+    "/vacantes/:url",
     vacantesController.subirCV,
     vacantesController.contactar
-  )
+  );
 
   return router;
 };

@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const Vacante = mongoose.model("Vacante");
 
-const multer = require('multer');
-const shortid = require('shortid');
+const multer = require("multer");
+const shortid = require("shortid");
 
 exports.formularioNuevaVacante = (req, res) => {
   res.render("nueva-vacante", {
@@ -10,7 +10,7 @@ exports.formularioNuevaVacante = (req, res) => {
     tagline: "Llena el Formulario y publica tu vacante",
     cerrarSesion: true,
     nombre: req.user.nombre,
-    imagen: req.user.imagen
+    imagen: req.user.imagen,
   });
 };
 
@@ -35,8 +35,9 @@ exports.agregarVacante = async (req, res) => {
 
 //muestra una vacante
 exports.mostrarVacante = async (req, res, next) => {
-  const vacante = await Vacante.findOne({ url: req.params.url }).populate('autor');
-
+  const vacante = await Vacante.findOne({ url: req.params.url }).populate(
+    "autor"
+  );
 
   //si no hay resultados
   if (!vacante) return next();
@@ -58,7 +59,7 @@ exports.formEditarVacante = async (req, res, next) => {
     nombrePagina: `Editar - ${vacante.titulo}`,
     cerrarSesion: true,
     nombre: req.user.nombre,
-    imagen: req.user.imagen
+    imagen: req.user.imagen,
   });
 };
 
@@ -142,23 +143,23 @@ const verificarAutor = (vacante = {}, usuario = {}) => {
 //Subir archivos en PDF
 exports.subirCV = (req, res, next) => {
   upload(req, res, function (error) {
-    if(error){
+    if (error) {
       if (error instanceof multer.MulterError) {
-        if(error.code === 'LIMIT_FILE_SIZE'){
-          req.flash('error', 'El archivo es muy grande: Máximo 100kb')
-        } else{
-          req.flash('error', error.message);
+        if (error.code === "LIMIT_FILE_SIZE") {
+          req.flash("error", "El archivo es muy grande: Máximo 100kb");
+        } else {
+          req.flash("error", error.message);
         }
-      }else{
-        req.flash('error', error.message);
+      } else {
+        req.flash("error", error.message);
       }
-      res.redirect('back');
+      res.redirect("back");
       return;
-    }else{
+    } else {
       return next();
     }
   });
-}
+};
 
 //Opciones de Multer
 const configuracionMulter = {
@@ -173,14 +174,36 @@ const configuracionMulter = {
     },
   })),
   fileFilter(req, file, cb) {
-    if (file.mimetype === "aplication/pdf" ) {
+    if (file.mimetype === "application/pdf") {
       //el callback se ejecuta como true o false: true cuando la imagen se acepta
       cb(null, true);
     } else {
-      cb(new Error('Formato No Válido'), false);
+      cb(new Error("Formato No Válido"), false);
     }
   },
- 
 };
 
 const upload = multer(configuracionMulter).single("cv");
+
+//almacenar los candidatos en la BD
+exports.contactar = async (req, res, next) => {
+  const vacante = await Vacante.findOne({ url: req.params.url });
+
+  //si no existe la vacante
+  if (!vacante) return next();
+
+  //todo bien, construir el nuevo objeto
+  const nuevoCandidato = {
+    nombre: req.body.nombre,
+    email: req.body.email,
+    cv: req.file.filename,
+  };
+
+  //almacenar la vacante
+  vacante.candidatos.push(nuevoCandidato);
+  await vacante.save();
+
+  //mensaje flash y redireccion
+  req.flash("correcto", "Se envió tu Curriculum Correctamente");
+  res.redirect("/");
+};
