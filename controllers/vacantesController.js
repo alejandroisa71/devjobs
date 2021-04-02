@@ -146,7 +146,7 @@ exports.subirCV = (req, res, next) => {
     if (error) {
       if (error instanceof multer.MulterError) {
         if (error.code === "LIMIT_FILE_SIZE") {
-          req.flash("error", "El archivo es muy grande: Máximo 100kb");
+          req.flash("error", "El archivo es muy grande: Máximo 200kb");
         } else {
           req.flash("error", error.message);
         }
@@ -163,7 +163,7 @@ exports.subirCV = (req, res, next) => {
 
 //Opciones de Multer
 const configuracionMulter = {
-  limits: { fileSize: 100000 },
+  limits: { fileSize: 200000 },
   storage: (fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
       cb(null, __dirname + "../../public/uploads/cv");

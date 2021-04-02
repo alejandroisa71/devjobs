@@ -40,3 +40,11 @@ exports.cerrarSesion = (req, res) => {
   req.flash("correcto", "Cerraste Sesión Correctamente");
   return res.redirect("/iniciar-sesion");
 };
+
+//formulario para Reiniciar el password
+exports.formReestablecerPassword = (req, res, next) => {
+  res.render("reestablecer-password", {
+    nombrePagina: "Reestablece tu Password",
+    tagline: "Si ya tienes cuenta, pero olvidaste tu Password, coloca tu email",
+  });
+};
