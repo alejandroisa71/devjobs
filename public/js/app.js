@@ -94,8 +94,7 @@ const accionesListado = (e) => {
           axios.delete(url, { params: { url } }).then(function (respuesta) {
             if (respuesta.status === 200) {
               Swal.fire("Eliminado!", respuesta.data, "success");
-
-              //TODO: Eliminar del DOM
+              // Eliminar del DOM
               e.target.parentElement.parentElement.parentElement.removeChild(
                 e.target.parentElement.parentElement
               );
