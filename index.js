@@ -9,9 +9,9 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const bodyParser = require("body-parser");
-const expressValidator = require('express-validator');
-const flash = require('connect-flash');
-const passport = require('./config/passport')
+const expressValidator = require("express-validator");
+const flash = require("connect-flash");
+const passport = require("./config/passport");
 
 require("dotenv").config({ path: "variables.env" });
 
@@ -51,18 +51,16 @@ app.use(
 
 // inicializar passport
 app.use(passport.initialize());
-app.use(passport.session()); 
+app.use(passport.session());
 
 //Alertas y flash messages
 app.use(flash());
 
 //Crear nuestro propio middleware
 app.use((req, res, next) => {
-  res.locals.mensajes= req.flash();
+  res.locals.mensajes = req.flash();
   next();
 });
-
-
 
 app.use("/", router());
 

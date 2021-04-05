@@ -45,7 +45,7 @@ exports.cerrarSesion = (req, res) => {
 };
 
 //formulario para Reiniciar el password
-exports.formReestablecerPassword = (req, res, next) => {
+exports.formReestablecerPassword = (req, res) => {
   res.render("reestablecer-password", {
     nombrePagina: "Reestablece tu Password",
     tagline: "Si ya tienes cuenta, pero olvidaste tu Password, coloca tu email",
@@ -69,7 +69,7 @@ exports.enviarToken = async (req, res) => {
   await usuario.save();
   const resetUrl = `http://${req.headers.host}/reestablecer-password/${usuario.token}`;
 
-  console.log(resetUrl);
+  // console.log(resetUrl);
 
   // Enviar notificacion por email
   await enviarEmail.enviar({
@@ -79,6 +79,55 @@ exports.enviarToken = async (req, res) => {
     archivo: "reset",
   });
 
+  //Todo correcto
+
   req.flash("correcto", "Revisa tu email para las indicaciones");
-  res.redirect("iniciar-sesion");
+  res.redirect("/iniciar-sesion");
+};
+
+//Valida  si el token es valido y el usuario exste, muestra la vista
+exports.reestablecerPassword = async (req, res) => {
+  const usuario = await Usuarios.findOne({
+    token: req.params.token,
+    expira: {
+      $gt: Date.now(),
+    },
+  });
+
+  if (!usuario) {
+    req.flash("error", "El formulario ya no es válido, intenta de nuevo");
+    return res.redirect("/reestablecer-password");
+  }
+
+  //Todo bien, mostrar el formulario
+  res.render("nuevo-password", {
+    nombrePagina: "Nuevo password",
+  });
+};
+
+//almacena el nuevo password en la BD
+exports.guardarPassword = async (req, res) => {
+  const usuario = await Usuarios.findOne({
+    token: req.params.token,
+    expira: {
+      $gt: Date.now(),
+    },
+  });
+  //no existe el usuario o el token  es invalido
+  if (!usuario) {
+    req.flash("error", "El formulario ya no es válido, intenta de nuevo");
+    return res.redirect("/reestablecer-password");
+  }
+
+  //Asignar nuevo password, limpiar valores previos
+  usuario.password = req.body.password;
+  usuario.token = undefined;
+  usuario.expira = undefined;
+
+  //agregar y eliminar valores del objeto
+  await usuario.save();
+
+  //redireccionar a iniciar sesion
+  req.flash("correcto", "Password Modificado Correctamente");
+  return res.redirect("/iniciar-sesion");
 };
