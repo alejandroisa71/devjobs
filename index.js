@@ -72,9 +72,11 @@ app.use((req, res, next) => {
 
 //Administracion de los errores
 app.use((error, req, res, next) => {
-  req.locals.mensaje = error.message;
-
-  res.render("error");
+   res.locals.mensaje = error.message;
+   const status = error.status || 500;
+   res.locals.status= status;
+   res.status(status);
+   res.render('error');
 });
 
 app.listen(process.env.PUERTO);
